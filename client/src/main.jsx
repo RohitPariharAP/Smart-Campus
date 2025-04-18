@@ -4,7 +4,7 @@ import App from './App';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
  
 import {AuthProvider} from './context/AuthContext';
-import { AttendanceProvider } from './context/AttendanceContext';
+ 
 import { Toaster } from 'react-hot-toast';
 import './index.css';
 
@@ -30,7 +30,8 @@ createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <AttendanceProvider>
+     
+          {/* Toast notifications */}
           <Toaster
             position="top-right"
             toastOptions={{
@@ -42,7 +43,7 @@ createRoot(document.getElementById('root')).render(
             }}
           />
           <App />
-        </AttendanceProvider>
+      
       </AuthProvider>
     </QueryClientProvider>
   </React.StrictMode>

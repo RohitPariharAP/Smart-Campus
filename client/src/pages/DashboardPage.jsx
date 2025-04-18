@@ -26,13 +26,7 @@ export default function DashboardPage() {
             <p className="text-gray-600">Access course notes and resources</p>
           </Link>
 
-          <Link
-            to="/attendance"
-            className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow"
-          >
-            <h2 className="text-xl font-semibold mb-2">Attendance Records</h2>
-            <p className="text-gray-600">View your attendance history</p>
-          </Link>
+           
 
           {user?.role === 'teacher' && (
             <Link

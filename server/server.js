@@ -5,8 +5,8 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 // const authRoutes = require('./routes/authRoute.js');
 const authRoutes = require('./routes/authRoute')
-
-const attendanceRoutes = require('./routes/attendanceRoutes');
+ 
+const attendanceRoutes = require("./routes/attendanceRoutes"); 
 const noteRoutes = require("./routes/noteRoutes");
 const path = require('path');
 require('dotenv').config();
@@ -72,7 +72,7 @@ app.use('/uploads', (req, res) => {
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/attendance', attendanceRoutes);
+app.use('/api/attendance', attendanceRoutes);  
 app.use('/api/notes', noteRoutes);
 
 // Health Check Endpoints

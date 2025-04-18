@@ -1,19 +1,33 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import ProtectedRoute from './components/ProtectedRoute';
-import Navbar from './components/Navbar';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Navbar from "./components/Navbar";
+
+// Shared Pages
 import {
   HomePage,
   LoginPage,
   RegistrationPage,
   NotesPage,
-  AttendancePage,
-  MarkAttendancePage,
   DashboardPage,
   NotFoundPage,
-  UploadNote
+  UploadNote,
+} from "./pages";
 
-} from './pages';
-import RegistrationForm from './components/RegistrationForm';
+// Registration Form
+import RegistrationForm from "./components/RegistrationForm";
+
+// New/Updated Attendance Pages
+import MarkAttendancePage from "./pages/MarkAttendancePage";
+import TeacherAttendanceHistoryPage from "./pages/TeacherAttendanceHistoryPage";
+import StudentAttendanceHistoryPage from "./pages/StudentAttendanceHistoryPage";
+// Optional: Remove or comment out if AttendanceDashboard/AdminRecords are deprecated
+// import AttendanceDashboard from "./pages/AttendanceDashboard";
+// import AdminRecords from "./pages/AdminRecords";
 
 function App() {
   return (
@@ -25,26 +39,36 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegistrationPage />} />
+          <Route path="/home" element={<Navigate to="/" replace />} />
 
-          {/* Protected Student Routes */}
+          {/* Protected Routes - All Authenticated Users */}
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/notes" element={<NotesPage />} />
-            <Route path="/attendance" element={<AttendancePage />} />
             <Route path="/upload-note" element={<UploadNote />} />
+            {/* Optional: Remove if not needed */}
+            {/* <Route path="/attendance" element={<AttendanceDashboard />} /> */}
           </Route>
 
-          {/* Protected Teacher Routes */}
+          {/* Student Only Routes */}
+          <Route element={<ProtectedRoute role="student" />}>
+            <Route path="/my-attendance" element={<StudentAttendanceHistoryPage />} />
+          </Route>
+
+          {/* Teacher Only Routes */}
           <Route element={<ProtectedRoute role="teacher" />}>
             <Route path="/mark-attendance" element={<MarkAttendancePage />} />
+            <Route path="/teacher-history" element={<TeacherAttendanceHistoryPage />} />
             <Route path="/register/student" element={<RegistrationForm />} />
             <Route path="/register/teacher" element={<RegistrationForm />} />
-            <Route path="/upload-note" element={<UploadNote />} />
-
           </Route>
 
-          {/* Redirects & 404 */}
-          <Route path="/home" element={<Navigate to="/" replace />} />
+          {/* Admin Only Routes - Keep or remove as needed */}
+          {/* <Route element={<ProtectedRoute role="admin" />}>
+            <Route path="/admin-attendance" element={<AdminRecords />} />
+          </Route> */}
+
+          {/* 404 Not Found */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>

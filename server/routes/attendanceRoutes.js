@@ -1,27 +1,25 @@
 const express = require('express');
 const router = express.Router();
-const { 
-  markAttendance, 
-  getAttendanceByDate,
-  getStudentAttendanceHistory,
-  getStudents,
-  getAttendanceSummary,
-  getMyAttendanceSummary,
-  getMyAttendanceByDate
+const { protect, teacherOnly } = require('../middleware/authMiddleware'); // Assuming you have teacherOnly middleware
+const {
+    markAttendance,
+    getAttendanceByTeacher,
+    getAttendanceByStudent,
+    getAttendanceSummary,
+    updateAttendance,
+    getStudentsForAttendance // Add this new controller function
 } = require('../controllers/attendanceController');
-const { protect, teacherOnly } = require("../middleware/authMiddleware");
 
-// Teacher-only routes
-router.post("/", protect, teacherOnly, markAttendance);
-router.get("/students", protect, teacherOnly, getStudents);
-router.get("/summary", protect, teacherOnly, getAttendanceSummary); // Teacher view
+// Routes for Teachers
+router.post('/mark', protect, teacherOnly, markAttendance);
+router.get('/teacher', protect, teacherOnly, getAttendanceByTeacher);
+router.put('/:recordId', protect, teacherOnly, updateAttendance);
+router.get('/students', protect, teacherOnly, getStudentsForAttendance); // Route to get student list
 
-// Student-accessible routes
-router.get("/:date", protect, getAttendanceByDate);
-router.get("/student/history", protect, getStudentAttendanceHistory);
-router.get("/summary/me", protect, getMyAttendanceSummary); // Student summary
-router.get("/student/date/:date", protect, getMyAttendanceByDate); // studnet date search
+// Route for Student's own view
+router.get('/student', protect, getAttendanceByStudent); // No teacherOnly needed
 
-// router.get("/:id", protect,teacherOnly, deleteUser); 
+// Route for Summary (accessible by teacher or the specific student)
+router.get('/summary/:studentId', protect, getAttendanceSummary); 
 
 module.exports = router;
