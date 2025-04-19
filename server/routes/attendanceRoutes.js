@@ -7,7 +7,8 @@ const {
     getAttendanceByStudent,
     getAttendanceSummary,
     updateAttendance,
-    getStudentsForAttendance // Add this new controller function
+    getStudentsForAttendance,
+     // Add this new controller function
 } = require('../controllers/attendanceController');
 
 // Routes for Teachers
@@ -21,5 +22,5 @@ router.get('/student', protect, getAttendanceByStudent); // No teacherOnly neede
 
 // Route for Summary (accessible by teacher or the specific student)
 router.get('/summary/:studentId', protect, getAttendanceSummary); 
-
+ 
 module.exports = router;

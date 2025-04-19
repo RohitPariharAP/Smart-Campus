@@ -8,12 +8,7 @@ const attendanceSchema = new Schema({
     required: [true, 'Student ID is required'],
     index: true 
   },
-  classSubject: { // Assuming a simple string for now. Could be a ref if you have a Class/Subject model.
-    type: String,
-    required: [true, 'Class/Subject is required'],
-    trim: true,
-    index: true
-  },
+
   date: { 
     type: Date, 
     required: [true, 'Date is required'],
